@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 type TaskType = {
   to: string;
@@ -17,10 +17,11 @@ export const tasksSlice = createSlice({
   name: "tasks",
   initialState,
   reducers: {
-    addTask: (state) => {
+    addTask: (state: TasksState, action: PayloadAction<TaskType>) => {
+      state.entities.push(action.payload);
       return state;
     },
-    removeTask: (state) => {
+    removeTask: (state: TasksState, action: PayloadAction<TaskType>) => {
       return state;
     },
   },
