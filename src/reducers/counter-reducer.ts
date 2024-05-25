@@ -11,7 +11,8 @@ export const increment = createAction("INCREMENT", (amount: number) => {
 export const decrement = createAction("DECREMENT", (amount: number) => {
   return { payload: amount };
 });
-const reset = createAction("RESET");
+
+export const reset = createAction("RESET");
 
 // GIVES TS SUPPORT IN REDUCER BELOW
 type CounterAction =
