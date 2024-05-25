@@ -5,6 +5,8 @@ export const store = configureStore({
   reducer: { tasks: tasksReducer },
 });
 
+export type ApplicationDispatch = typeof store.dispatch;
+
 export type ApplicationState = ReturnType<typeof store.getState>;
 // ^ Can NOT put in global state because it relies on store
 
