@@ -1,4 +1,4 @@
-import { CounterComp, CreateTask } from "@/components";
+import { CounterComp, CreateTask, TasksList } from "@/components";
 import { Provider } from "react-redux";
 import { store } from "./store";
 
@@ -10,7 +10,14 @@ function App() {
 
         <div style={{ margin: "8px 0px" }} />
 
-        <CreateTask />
+        <div className="flex flex-col md:flex-row">
+          <div className="md:w-1/2">
+            <CreateTask />
+          </div>
+          <div className="md:w-1/2">
+            <TasksList />
+          </div>
+        </div>
       </Provider>
     </>
   );

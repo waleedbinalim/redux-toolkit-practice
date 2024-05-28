@@ -1,13 +1,16 @@
-import { addTask, tasksReducer } from "@/slice";
-import React, { useReducer, useRef } from "react";
+import { useAppDispatch } from "@/hooks";
+import { addTask } from "@/slice";
+import React, { useRef } from "react";
 
 const CreateTask: React.FC = () => {
   const taskValRef = useRef<HTMLTextAreaElement>(null);
 
-  const [_state, dispatch] = useReducer(tasksReducer, { entities: [] });
+  // const [state, dispatch] = useReducer(tasksReducer, { entities: [] }); //OLD METHOD
+
+  const dispatch = useAppDispatch(); // This is the recommended way for RTK
 
   return (
-    <div className="p-4 md:w-1/2">
+    <div className="p-4">
       <h1 className="text-center text-lg mb-2 font-bold">
         Create Task Component
       </h1>
