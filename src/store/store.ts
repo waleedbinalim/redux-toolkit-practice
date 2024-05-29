@@ -1,8 +1,9 @@
 import { tasksReducer } from "@/slice";
+import { userReducer } from "@/slice/users-slice";
 import { configureStore } from "@reduxjs/toolkit";
 
 export const store = configureStore({
-  reducer: { tasks: tasksReducer },
+  reducer: { tasks: tasksReducer, users: userReducer },
 });
 
 export type ApplicationDispatch = typeof store.dispatch;
