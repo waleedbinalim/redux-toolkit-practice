@@ -1,4 +1,4 @@
-import { CounterComp, CreateTask, TasksList } from "@/components";
+import { CounterComp, CreateTask, TasksList, UsersList } from "@/components";
 import { Provider } from "react-redux";
 import { store } from "./store";
 
@@ -18,6 +18,8 @@ function App() {
             <TasksList />
           </div>
         </div>
+
+        <UsersList />
       </Provider>
     </>
   );

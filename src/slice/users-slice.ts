@@ -13,7 +13,12 @@ type UserState = {
 };
 
 const initialState: UserState = {
-  entities: [],
+  entities: [
+    // MOCK USERS HERE
+    { id: "1", realName: "Jared", tasks: [], alterEgo: "Ranger" },
+    { id: "2", realName: "Solomon", tasks: [], alterEgo: "Fishcake" },
+    { id: "3", realName: "Logan", tasks: [], alterEgo: "Chef" },
+  ],
 };
 
 type DraftUser = RequireOnly<UserType, "realName" | "alterEgo">;
