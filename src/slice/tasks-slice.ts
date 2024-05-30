@@ -1,7 +1,8 @@
 import { PayloadAction, createSlice, nanoid } from "@reduxjs/toolkit";
+import { UserType, removeUser } from "./users-slice";
 
 // STANDARD STUFF
-type TaskType = { id: string; title: string };
+export type TaskType = { id: string; title: string; user?: UserType["id"] };
 export type TasksState = { entities: TaskType[] };
 const initialState: TasksState = { entities: [] };
 
@@ -32,6 +33,16 @@ export const tasksSlice = createSlice({
       state.entities.splice(index, 1);
       return state;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(removeUser, (state, action) => {
+      //WHEN YOU REMOVE USER YOU GOTTA REMOVE USER AS ASIGNEE FROM ALL TASKS
+      const userId = action.payload;
+
+      for (const tasks of state.entities) {
+        if (tasks.id === userId) tasks.user = undefined;
+      }
+    });
   },
 });
 

@@ -1,9 +1,10 @@
 import { PayloadAction, createSlice, nanoid } from "@reduxjs/toolkit";
+import { TaskType } from "./tasks-slice";
 
-type UserType = {
+export type UserType = {
   id: string;
   realName: string;
-  tasks: string[];
+  tasks: TaskType["id"][];
   alterEgo: string;
 };
 
