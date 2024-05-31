@@ -14,7 +14,7 @@ const HomePage: React.FC = () => {
       <div className="px-12">
         <p className="text-center my-4">Your examples to choose from:</p>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {appNav.map((item, i) => {
             const { name, path } = item;
             if (path === appRoutes.home) return;
@@ -23,7 +23,7 @@ const HomePage: React.FC = () => {
               <div
                 key={path}
                 onClick={() => navigate(path)}
-                className="grid place-content-center h-48 bg-violet-300 rounded-lg cursor-pointer hover:scale-105"
+                className="grid place-content-center h-32  bg-violet-300 rounded-lg cursor-pointer hover:scale-105"
               >
                 <p className="text-2xl font-bold text-slate-700">{name}</p>
               </div>
