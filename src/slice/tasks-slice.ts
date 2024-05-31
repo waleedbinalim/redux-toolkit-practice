@@ -1,10 +1,15 @@
-import { PayloadAction, createSlice, nanoid } from "@reduxjs/toolkit";
+import {
+  PayloadAction,
+  createAsyncThunk,
+  createSlice,
+  nanoid,
+} from "@reduxjs/toolkit";
 import { UserType, removeUser } from "./users-slice";
 
 // STANDARD STUFF
 export type TaskType = { id: string; title: string; user?: UserType["id"] };
-export type TasksState = { entities: TaskType[] };
-const initialState: TasksState = { entities: [] };
+export type TasksState = { entities: TaskType[]; loading: boolean };
+const initialState: TasksState = { entities: [], loading: false };
 
 // OLD: CREATE TASK ACTION (SO WE DON'T NEED TO SPECIFY ID)
 type DraftTask = Pick<TaskType, "title">;
@@ -16,6 +21,16 @@ type DraftTask2 = RequireOnly<TaskType, "title">;
 export const createTask = (draftTask: DraftTask): TaskType => {
   return { id: nanoid(), ...draftTask };
 };
+
+// TIME FOR ASYNC REDUX, First without RTK Query ==================================================
+export const fetchTasks = createAsyncThunk(
+  "tasks/fetchTasks",
+  async (): Promise<TaskType[]> => {
+    const response = await fetch("api/tasks").then((res) => res.json());
+    return response.entities;
+  }
+);
+// ===============================================================================================
 
 export const tasksSlice = createSlice({
   name: "tasks",
@@ -37,11 +52,25 @@ export const tasksSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(removeUser, (state, action) => {
       //WHEN YOU REMOVE USER YOU GOTTA REMOVE USER AS ASIGNEE FROM ALL TASKS
+      // ACTIONS HERE WORKS FLAWLESSLY WITH TYPE SCRIPT
       const userId = action.payload;
 
       for (const tasks of state.entities) {
         if (tasks.id === userId) tasks.user = undefined;
       }
+    });
+
+    builder.addCase(fetchTasks.fulfilled, (state, action) => {
+      state.entities = action.payload;
+      state.loading = false;
+    }); // Now use store.dispatch(fetchTasks()) outside component in required place
+
+    builder.addCase(fetchTasks.pending, (state, _action) => {
+      state.loading = true;
+    });
+
+    builder.addCase(fetchTasks.rejected, (state, _action) => {
+      state.loading = true;
     });
   },
 });
