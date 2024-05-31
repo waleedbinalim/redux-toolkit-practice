@@ -33,7 +33,7 @@ export const generateTasks = (): TaskType[] => {
 export const generateUsers = (): UserType[] => {
   const initialUsers = [];
 
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < 5; i++) {
     const newUser: UserType = {
       id: factory().toString(),
       alterEgo: randUserName({ withAccents: false }),
