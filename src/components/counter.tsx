@@ -1,8 +1,16 @@
-import React, { useReducer } from "react";
-import { counterReducer2, increment, decrement, reset } from "../reducers";
+import React, { useReducer, useRef } from "react";
+import {
+  counterReducer2,
+  incrementCounter,
+  decrementCounter,
+  resetCounter,
+  addCounterByAmount,
+} from "../reducers";
 
 const CounterComp: React.FC = () => {
   const [state, dispatch] = useReducer(counterReducer2, { count: 0 });
+
+  const inputRef = useRef<HTMLInputElement>(null);
 
   return (
     <>
@@ -17,21 +25,33 @@ const CounterComp: React.FC = () => {
           <div className="flex gap-2">
             <button
               className="py-2 px-4 bg-blue-500 text-white rounded-lg"
-              onClick={() => dispatch(increment(1))}
+              onClick={() => dispatch(incrementCounter(1))}
             >
               Increment
             </button>
             <button
               className="py-2 px-4 bg-blue-500 text-white rounded-lg"
-              onClick={() => dispatch(decrement(1))}
+              onClick={() => dispatch(decrementCounter(1))}
             >
               Decrement
             </button>
             <button
               className="py-2 px-4 bg-blue-500 text-white rounded-lg"
-              onClick={() => dispatch(reset())}
+              onClick={() => dispatch(resetCounter())}
             >
               Reset
+            </button>
+          </div>
+
+          <div className="mt-2">
+            <p>Add by amount</p>
+            <input type="number" defaultValue={0} ref={inputRef} />
+            <button
+              onClick={() =>
+                dispatch(addCounterByAmount(+inputRef.current?.value! ?? 0))
+              }
+            >
+              Submit
             </button>
           </div>
         </div>

@@ -4,21 +4,29 @@ import { createAction, createReducer } from "@reduxjs/toolkit";
 
 type CounterState = { count: number };
 
-export const increment = createAction("INCREMENT", (amount: number) => {
+export const incrementCounter = createAction("INCREMENT", (amount: number) => {
   return { payload: amount };
 });
 
-export const decrement = createAction("DECREMENT", (amount: number) => {
+export const decrementCounter = createAction("DECREMENT", (amount: number) => {
   return { payload: amount };
 });
 
-export const reset = createAction("RESET");
+export const addCounterByAmount = createAction(
+  "ADD_COUNTER_BY_AMOUNT",
+  (amount: number) => {
+    return { payload: amount };
+  }
+);
+
+export const resetCounter = createAction("RESET");
 
 // GIVES TS SUPPORT IN REDUCER BELOW
 type CounterAction =
-  | ReturnType<typeof increment>
-  | ReturnType<typeof decrement>
-  | ReturnType<typeof reset>;
+  | ReturnType<typeof incrementCounter>
+  | ReturnType<typeof decrementCounter>
+  | ReturnType<typeof resetCounter>
+  | ReturnType<typeof addCounterByAmount>;
 
 export const counterReduerOld = (
   state: CounterState,
@@ -27,6 +35,8 @@ export const counterReduerOld = (
   if (action.type === "INCREMENT") return (state.count += action.payload);
   if (action.type === "DECREMENT") return (state.count -= action.payload);
   if (action.type === "RESET") return (state.count = 0);
+  if (action.type === "ADD_COUNTER_BY_AMOUNT")
+    return (state.count += action.payload);
   //   DEFAULT RETURN STATE
   return state;
 };
@@ -35,16 +45,20 @@ export const counterReduerOld = (
 //  CREAETE REDUCER TAKES INITAL STATE
 // IMMER IS OUT OF THE BOX SO NO NEED FOR SPREAD OPERATOR ON DEEPLY NESTED OBJECTS
 export const counterReducer2 = createReducer({ count: 0 }, (builder) => {
-  builder.addCase(increment, (state, action) => {
+  builder.addCase(incrementCounter, (state, action) => {
     state.count += action.payload;
   });
 
-  builder.addCase(decrement, (state, action) => {
+  builder.addCase(decrementCounter, (state, action) => {
     state.count -= action.payload;
   });
 
-  builder.addCase(reset, (state) => {
+  builder.addCase(resetCounter, (state) => {
     state.count = 0;
+  });
+
+  builder.addCase(addCounterByAmount, (state, action) => {
+    state.count += action.payload;
   });
 });
 
