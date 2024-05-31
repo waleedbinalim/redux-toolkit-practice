@@ -8,31 +8,45 @@ import {
 import { Provider } from "react-redux";
 import { store } from "./store";
 import { makeServer } from "./mock-server";
+import {
+  CounterPage,
+  HomePage,
+  ItemsPage,
+  TasksPage,
+  UsersPage,
+} from "./pages";
+import { Link, Route, Routes } from "react-router-dom";
+import { appNav, appRoutes } from "./constants";
 
 makeServer();
 
 function App() {
   return (
-    <>
-      <Provider store={store}>
-        <ItemsList />
+    <Provider store={store}>
+      <div className="min-h-[40px] bg-slate-50 drop-shadow-lg px-12">
+        <ul className="flex px-4 py-6 justify-between">
+          {appNav.map((navItem) => {
+            return (
+              <Link
+                to={navItem.path}
+                className="font-bold text-blue-500 cursor-pointer"
+                key={navItem.path}
+              >
+                {navItem.name}
+              </Link>
+            );
+          })}
+        </ul>
+      </div>
 
-        <CounterComp />
-
-        <div style={{ margin: "8px 0px" }} />
-
-        <div className="flex flex-col md:flex-row">
-          <div className="md:w-1/2">
-            <CreateTask />
-          </div>
-          <div className="md:w-1/2">
-            <TasksList />
-          </div>
-        </div>
-
-        <UsersList />
-      </Provider>
-    </>
+      <Routes>
+        <Route path={appRoutes.home} element={<HomePage />} />
+        <Route path={appRoutes.counter} element={<CounterPage />} />
+        <Route path={appRoutes.users} element={<UsersPage />} />
+        <Route path={appRoutes.tasks} element={<TasksPage />} />
+        <Route path={appRoutes.items} element={<ItemsPage />} />
+      </Routes>
+    </Provider>
   );
 }
 

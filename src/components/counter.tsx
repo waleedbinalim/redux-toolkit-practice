@@ -24,13 +24,13 @@ const CounterComp: React.FC = () => {
         <div className="grid place-content-center">
           <div className="flex gap-2">
             <button
-              className="py-2 px-4 bg-blue-500 text-white rounded-lg"
+              className="py-2 px-4 bg-green-600 text-white rounded-lg"
               onClick={() => dispatch(incrementCounter(1))}
             >
               Increment
             </button>
             <button
-              className="py-2 px-4 bg-blue-500 text-white rounded-lg"
+              className="py-2 px-4 bg-red-600 text-white rounded-lg"
               onClick={() => dispatch(decrementCounter(1))}
             >
               Decrement
@@ -44,15 +44,23 @@ const CounterComp: React.FC = () => {
           </div>
 
           <div className="mt-2">
-            <p>Add by amount</p>
-            <input type="number" defaultValue={0} ref={inputRef} />
-            <button
-              onClick={() =>
-                dispatch(addCounterByAmount(+inputRef.current?.value!))
-              }
-            >
-              Submit
-            </button>
+            <p className="mb-2">Add by a specific amount</p>
+            <div className="flex gap-2">
+              <input
+                type="number"
+                className="rounded-lg px-4 py-2"
+                defaultValue={0}
+                ref={inputRef}
+              />
+              <button
+                onClick={() =>
+                  dispatch(addCounterByAmount(+inputRef.current?.value!))
+                }
+                className="py-2 px-4 bg-blue-500 text-white rounded-lg"
+              >
+                Submit
+              </button>
+            </div>
           </div>
         </div>
       </div>
