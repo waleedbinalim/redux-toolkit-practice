@@ -48,7 +48,7 @@ const CounterComp: React.FC = () => {
             <input type="number" defaultValue={0} ref={inputRef} />
             <button
               onClick={() =>
-                dispatch(addCounterByAmount(+inputRef.current?.value! ?? 0))
+                dispatch(addCounterByAmount(+inputRef.current?.value!))
               }
             >
               Submit
