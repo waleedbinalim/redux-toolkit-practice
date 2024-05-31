@@ -12,7 +12,7 @@ const UsersList: React.FC = () => {
 
       {usersList.map((user) => {
         return (
-          <div className="bg-slate-100 p-4 rounded-md mb-2">
+          <div className="bg-slate-100 p-4 rounded-md mb-2" key={user.id}>
             <div>{user.id}</div>
             <div>{user.realName}</div>
             <div>{user.alterEgo}</div>

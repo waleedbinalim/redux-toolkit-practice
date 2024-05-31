@@ -1,11 +1,22 @@
-import { CounterComp, CreateTask, TasksList, UsersList } from "@/components";
+import {
+  CounterComp,
+  CreateTask,
+  ItemsList,
+  TasksList,
+  UsersList,
+} from "@/components";
 import { Provider } from "react-redux";
 import { store } from "./store";
+import { makeServer } from "./mock-server";
+
+makeServer();
 
 function App() {
   return (
     <>
       <Provider store={store}>
+        <ItemsList />
+
         <CounterComp />
 
         <div style={{ margin: "8px 0px" }} />
