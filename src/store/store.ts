@@ -1,9 +1,17 @@
+import { itemApi } from "@/services";
 import { tasksReducer } from "@/slice";
 import { userReducer } from "@/slice/users-slice";
 import { configureStore } from "@reduxjs/toolkit";
 
 export const store = configureStore({
-  reducer: { tasks: tasksReducer, users: userReducer },
+  reducer: {
+    tasks: tasksReducer,
+    users: userReducer,
+    [itemApi.reducerPath]: itemApi.reducer,
+  },
+  middleware: (getDefaultMiddleware) => {
+    return getDefaultMiddleware().concat(itemApi.middleware);
+  },
 });
 
 export type ApplicationDispatch = typeof store.dispatch;
