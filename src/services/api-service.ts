@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-type Item = {
+export type ItemType = {
   id: string;
   name: string;
   packed: boolean;
@@ -11,8 +11,8 @@ export const itemApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: "/api" }),
   endpoints: (builder) => {
     return {
-      getItems: builder.query<{ items: Item[] }, void>({
-        query: () => "items",
+      getItems: builder.query<{ items: ItemType[] }, void>({
+        query: () => ({ url: "/items" }),
       }),
     };
   },
