@@ -1,5 +1,8 @@
 import { ItemType } from "@/services";
 import { createServer } from "miragejs";
+import { generateItem } from "./mock-data-generator";
+
+const ITEMS_AMOUNT_TO_GENERATE = 3;
 
 export const makeServer = () => {
   const server = createServer({
@@ -9,13 +12,12 @@ export const makeServer = () => {
       this.get(
         "/items",
         (): { items: ItemType[] } => {
-          return {
-            items: [
-              { id: "1", name: "Inception", packed: false },
-              { id: "2", name: "Interstellar", packed: false },
-              { id: "3", name: "Dunkirk", packed: false },
-            ],
-          };
+          //
+          const items: ItemType[] = [];
+          for (let i = 0; i < ITEMS_AMOUNT_TO_GENERATE; i++)
+            items.push(generateItem());
+
+          return { items };
         },
         { timing: 4000 }
       );
