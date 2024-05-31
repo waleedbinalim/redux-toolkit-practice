@@ -5,11 +5,12 @@ import {
   nanoid,
 } from "@reduxjs/toolkit";
 import { UserType, removeUser } from "./users-slice";
+import { generateTasks } from "@/mock-server/mock-data-generator";
 
 // STANDARD STUFF
 export type TaskType = { id: string; title: string; user?: UserType["id"] };
 export type TasksState = { entities: TaskType[]; loading: boolean };
-const initialState: TasksState = { entities: [], loading: false };
+const initialState: TasksState = { entities: generateTasks(), loading: false };
 
 // OLD: CREATE TASK ACTION (SO WE DON'T NEED TO SPECIFY ID)
 type DraftTask = Pick<TaskType, "title">;

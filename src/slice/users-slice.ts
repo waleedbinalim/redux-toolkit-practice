@@ -1,5 +1,6 @@
 import { PayloadAction, createSlice, nanoid } from "@reduxjs/toolkit";
 import { TaskType } from "./tasks-slice";
+import { generateUsers } from "@/mock-server/mock-data-generator";
 
 export type UserType = {
   id: string;
@@ -13,12 +14,13 @@ type UserState = {
 };
 
 const initialState: UserState = {
-  entities: [
-    // MOCK USERS HERE
-    { id: "1", realName: "Jared", tasks: [], alterEgo: "Ranger" },
-    { id: "2", realName: "Solomon", tasks: [], alterEgo: "Fishcake" },
-    { id: "3", realName: "Logan", tasks: [], alterEgo: "Chef" },
-  ],
+  entities: generateUsers(),
+  // entities: [
+  //   // MOCK USERS HERE
+  //   { id: "1", realName: "Jared", tasks: [], alterEgo: "Ranger" },
+  //   { id: "2", realName: "Solomon", tasks: [], alterEgo: "Fishcake" },
+  //   { id: "3", realName: "Logan", tasks: [], alterEgo: "Chef" },
+  // ],
 };
 
 type DraftUser = RequireOnly<UserType, "realName" | "alterEgo">;
