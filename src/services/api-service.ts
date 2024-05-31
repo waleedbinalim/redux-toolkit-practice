@@ -1,6 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-type Item = {};
+type Item = {
+  id: string;
+  name: string;
+  packed: boolean;
+};
 
 export const itemApi = createApi({
   reducerPath: "itemApi",
