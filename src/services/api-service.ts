@@ -14,11 +14,24 @@ export const itemApi = createApi({
       getItems: builder.query<{ items: ItemType[] }, void>({
         query: () => ({ url: "/items" }),
       }),
+
+      getItemById: builder.query<
+        { item: ItemType },
+        ItemType["id"] | undefined
+      >({
+        query: (id) => ({ url: `/items/${id}` }),
+        keepUnusedDataFor: 500,
+      }),
     };
   },
 });
 
-export const { useGetItemsQuery } = itemApi; //PREMADE STUFF RTK Query OFFERS IS
+export const {
+  useGetItemsQuery,
+  useGetItemByIdQuery,
+  useLazyGetItemByIdQuery, // ALLOWS MANUALLY FETCHING INSTEAD OF FETCHING QUERY IMMEDIATELY
+  //
+} = itemApi; //PREMADE STUFF RTK Query OFFERS
 // CONTAINS Uninitialized | Error | Success | Fetching
 
 //  TO USE IN APP

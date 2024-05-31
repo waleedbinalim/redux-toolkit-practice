@@ -29,6 +29,12 @@ export const makeServer = () => {
       this.get("/items", (schema: AppSchema) => schema.all("item"), {
         timing: 2000,
       });
+
+      this.get(
+        "/items/:id",
+        (schema: AppSchema, req) => schema.find("item", req.params["id"]),
+        { timing: 2000 }
+      );
     },
   });
 
