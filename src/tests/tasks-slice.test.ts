@@ -1,12 +1,10 @@
 import { expect, test, describe } from "vitest";
 import { addTask, createTask, tasksReducer } from "@/slice";
+import { generateTasks } from "@/mock-server/mock-data-generator";
 
 describe("tasksSlice", () => {
   const initialState = {
-    entities: [
-      createTask({ title: "Test Task 1" }),
-      createTask({ title: "Test Task 2" }),
-    ],
+    entities: [...generateTasks()],
     loading: false,
   };
 

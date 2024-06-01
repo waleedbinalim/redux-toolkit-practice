@@ -5,11 +5,12 @@ import {
   nanoid,
 } from "@reduxjs/toolkit";
 import { UserType, removeUser } from "./users-slice";
+import { generateTasks } from "@/mock-server/mock-data-generator";
 
 // STANDARD STUFF
 export type TaskType = { id: string; title: string; user?: UserType["id"] };
 export type TasksState = { entities: TaskType[]; loading: boolean };
-const initialState: TasksState = { entities: [], loading: false };
+const initialState: TasksState = { entities: generateTasks(), loading: false };
 
 // OLD: CREATE TASK ACTION (SO WE DON'T NEED TO SPECIFY ID)
 type DraftTask = Pick<TaskType, "title">;
@@ -48,6 +49,18 @@ export const tasksSlice = createSlice({
       state.entities.splice(index, 1);
       return state;
     },
+    assignTaskToUser: (
+      state: TasksState,
+      action: PayloadAction<{ taskId: TaskType["id"]; userId: UserType["id"] }>
+    ) => {
+      const foundTask = state.entities.find(
+        (task) => task.id === action.payload.taskId
+      );
+      if (!foundTask) return;
+      foundTask.user = action.payload.userId;
+
+      return state;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(removeUser, (state, action) => {
@@ -77,4 +90,4 @@ export const tasksSlice = createSlice({
 
 export const tasksReducer = tasksSlice.reducer;
 
-export const { addTask, removeTask } = tasksSlice.actions;
+export const { addTask, removeTask, assignTaskToUser } = tasksSlice.actions;
