@@ -4,36 +4,48 @@ import React, { useRef } from "react";
 const FindItemComp: React.FC = () => {
   const fetchByIdRef = useRef<HTMLInputElement>(null);
 
-  const [trigger, { data: postByID, isFetching: isByIdLoading }] =
+  const [trigger, { currentData: currentData, isFetching, error }] =
     useLazyGetItemByIdQuery();
+
   return (
     <>
       <section>
-        <p>fetch by id</p>
+        <p className="text-lg font bold">Fetch item by Id:</p>
         <form
-          action=""
+          className="flex gap-2"
           onSubmit={(e) => {
             e.preventDefault();
-            trigger(fetchByIdRef.current?.value ?? undefined);
+            trigger(fetchByIdRef.current?.value);
           }}
         >
-          <input type="text" ref={fetchByIdRef} />
-          <button type="submit">Get By Id</button>
+          <input
+            type="text"
+            ref={fetchByIdRef}
+            className="border-2 py-2 px-4 rounded-lg"
+          />
+          <button type="submit" className="bg-blue-400 py-2 px-4 rounded-lg">
+            Get By Id
+          </button>
         </form>
       </section>
 
       <section>
-        <div>Fetching: {isByIdLoading ? "True" : "False"}</div>
-        {!!postByID?.item && (
+        <div>{isFetching && !currentData && "Loading..."}</div>
+
+        {!!error && (
           <div>
-            <h1>Found</h1>
-            <div>
-              <div className="flex flex-col bg-blue-200">
-                <span>{postByID.item.id}</span>
-                <span>{postByID.item.name}</span>
-                <span>{postByID.item.packed}</span>
-              </div>
-            </div>
+            {/* @ts-ignore */}
+            <div>{error?.data!.message}</div>
+          </div>
+        )}
+
+        <div className="my-4" />
+
+        {!!currentData?.item && (
+          <div className="flex flex-col bg-blue-200 rounded-lg p-4">
+            <p>ID: {currentData.item.id}</p>
+            <p>{currentData.item.name}</p>
+            <p>{currentData.item.packed}</p>
           </div>
         )}
       </section>

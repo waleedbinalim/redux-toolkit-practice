@@ -1,5 +1,5 @@
 import { ItemType } from "@/services";
-import { Model, Registry, createServer } from "miragejs";
+import { Model, Registry, createServer, Response } from "miragejs";
 import { ModelDefinition } from "miragejs/-types";
 import Schema from "miragejs/orm/schema";
 import { generateItem } from "./mock-data-generator";
@@ -32,7 +32,18 @@ export const makeServer = () => {
 
       this.get(
         "/items/:id",
-        (schema: AppSchema, req) => schema.find("item", req.params["id"]),
+        (schema: AppSchema, req) => {
+          const found = schema.find("item", req.params["id"]);
+
+          if (found) return found;
+          else {
+            return new Response(
+              404,
+              { some: "Error" },
+              { message: "No Post Found" }
+            );
+          }
+        },
         { timing: 2000 }
       );
     },
