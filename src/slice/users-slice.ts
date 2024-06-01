@@ -50,9 +50,6 @@ export const userSlice = createSlice({
 
       const foundUser = state.entities.find((user) => user.id === userId);
       foundUser?.tasks.push(taskId);
-
-      console.log("foundUser");
-      console.log(foundUser);
     });
   },
 });
