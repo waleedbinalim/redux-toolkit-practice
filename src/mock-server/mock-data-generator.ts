@@ -17,10 +17,10 @@ export const generateItem = (): ItemType => ({
   packed: randBoolean(),
 });
 
-export const generateTasks = (): TaskType[] => {
+export const generateTasks = (amount: number = 4): TaskType[] => {
   const initialTasks = [];
 
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < amount; i++) {
     const newTask: TaskType = {
       id: factory().toString(),
       title: randText({ charCount: 20 }),
@@ -30,10 +30,10 @@ export const generateTasks = (): TaskType[] => {
   return initialTasks;
 };
 
-export const generateUsers = (): UserType[] => {
+export const generateUsers = (amount: number = 5): UserType[] => {
   const initialUsers = [];
 
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < amount; i++) {
     const newUser: UserType = {
       id: factory().toString(),
       alterEgo: randUserName({ withAccents: false }),

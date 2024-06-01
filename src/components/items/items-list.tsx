@@ -1,5 +1,6 @@
 import { useGetItemsQuery, useLazyGetItemByIdQuery } from "@/services";
 import React, { useRef } from "react";
+import ItemsListLoader from "./items-list-loader";
 
 const ItemsList: React.FC = () => {
   const { data, isLoading } = useGetItemsQuery();
@@ -14,18 +15,7 @@ const ItemsList: React.FC = () => {
       <h1 className="text-xl font-bold mb-2">Items List</h1>
 
       {/* LOADING */}
-      {isLoading && (
-        <section>
-          {[...Array(3)].map((_, i) => {
-            return (
-              <div
-                className="w-1/3 mb-2 bg-slate-300 p-4 animate-pulse min-h-[80px]"
-                key={`items-loader-${i}`}
-              />
-            );
-          })}
-        </section>
-      )}
+      {isLoading && <ItemsListLoader />}
 
       {/* LOADED */}
       <section>
