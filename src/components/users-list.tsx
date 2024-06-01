@@ -7,11 +7,11 @@ const UsersList: React.FC = () => {
   const dispatch = useAppDispatch();
 
   return (
-    <section className="flex gap-2 flex-wrap  justify-center">
+    <section className="grid grid-cols-1 md:grid-cols-3 gap-2 flex-wrap  justify-center">
       {usersList.map((user) => {
         return (
           <div
-            className="w-1/4  p-4 rounded-md mb-2 bg-slate-200"
+            className="  p-4 rounded-md mb-2 bg-slate-50 shadow-lg"
             key={user.id}
           >
             <div className="">
