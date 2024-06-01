@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice, nanoid } from "@reduxjs/toolkit";
-import { TaskType } from "./tasks-slice";
+import { TaskType, assignTaskToUser } from "./tasks-slice";
 import { generateUsers } from "@/mock-server/mock-data-generator";
 
 export type UserType = {
@@ -43,6 +43,17 @@ export const userSlice = createSlice({
       state.entities.unshift(user);
       return state;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(assignTaskToUser, (state, action) => {
+      const { taskId, userId } = action.payload;
+
+      const foundUser = state.entities.find((user) => user.id === userId);
+      foundUser?.tasks.push(taskId);
+
+      console.log("foundUser");
+      console.log(foundUser);
+    });
   },
 });
 

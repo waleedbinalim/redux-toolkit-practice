@@ -49,6 +49,18 @@ export const tasksSlice = createSlice({
       state.entities.splice(index, 1);
       return state;
     },
+    assignTaskToUser: (
+      state: TasksState,
+      action: PayloadAction<{ taskId: TaskType["id"]; userId: UserType["id"] }>
+    ) => {
+      const foundTask = state.entities.find(
+        (task) => task.id === action.payload.taskId
+      );
+      if (!foundTask) return;
+      foundTask.user = action.payload.userId;
+
+      return state;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(removeUser, (state, action) => {
@@ -78,4 +90,4 @@ export const tasksSlice = createSlice({
 
 export const tasksReducer = tasksSlice.reducer;
 
-export const { addTask, removeTask } = tasksSlice.actions;
+export const { addTask, removeTask, assignTaskToUser } = tasksSlice.actions;
