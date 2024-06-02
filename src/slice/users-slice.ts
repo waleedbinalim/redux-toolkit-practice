@@ -38,7 +38,7 @@ export const userSlice = createSlice({
       state.entities.splice(index, 1);
       return state;
     },
-    addUser: (state, action) => {
+    addUser: (state, action: PayloadAction<DraftUser>) => {
       const user = createUser(action.payload);
       state.entities.unshift(user);
       return state;
